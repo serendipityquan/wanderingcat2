@@ -1,0 +1,130 @@
+<form id="edit-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Mao_pic')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-mao_pic" data-rule="required" class="form-control" name="row[mao_pic]" type="text" value="{$row.mao_pic|htmlentities}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Wx_pic')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-wx_pic" data-rule="required" class="form-control" name="row[wx_pic]" type="text" value="{$row.wx_pic|htmlentities}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Mao_name')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-mao_name" data-rule="required" class="form-control" name="row[mao_name]" type="text" value="{$row.mao_name|htmlentities}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Mao_age')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-mao_age" data-rule="required" class="form-control" name="row[mao_age]" type="text" value="{$row.mao_age|htmlentities}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Mao_sex')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            
+            <div class="radio">
+            {foreach name="maoSexList" item="vo"}
+            <label for="row[mao_sex]-{$key}"><input id="row[mao_sex]-{$key}" name="row[mao_sex]" type="radio" value="{$key}" {in name="key" value="$row.mao_sex"}checked{/in} /> {$vo}</label> 
+            {/foreach}
+            </div>
+
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Mao_jy')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            
+            <div class="radio">
+            {foreach name="maoJyList" item="vo"}
+            <label for="row[mao_jy]-{$key}"><input id="row[mao_jy]-{$key}" name="row[mao_jy]" type="radio" value="{$key}" {in name="key" value="$row.mao_jy"}checked{/in} /> {$vo}</label> 
+            {/foreach}
+            </div>
+
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Mao_source')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-mao_source" data-rule="required" class="form-control" name="row[mao_source]" type="text" value="{$row.mao_source|htmlentities}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Mao_remark')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-mao_remark" class="form-control" name="row[mao_remark]" type="text" value="{$row.mao_remark|htmlentities}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('City')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <div class='control-relative'><input id="c-city" data-rule="required" class="form-control" data-toggle="city-picker" name="row[city]" type="text" value="{$row.city|htmlentities}"></div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Province_id')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-province_id" data-rule="required" data-source="province/index" class="form-control selectpage" name="row[province_id]" type="text" value="{$row.province_id|htmlentities}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('City_id')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-city_id" data-rule="required" data-source="city/index" class="form-control selectpage" name="row[city_id]" type="text" value="{$row.city_id|htmlentities}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('District_id')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-district_id" data-rule="required" data-source="district/index" class="form-control selectpage" name="row[district_id]" type="text" value="{$row.district_id|htmlentities}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Mao_ym')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            
+            <div class="radio">
+            {foreach name="maoYmList" item="vo"}
+            <label for="row[mao_ym]-{$key}"><input id="row[mao_ym]-{$key}" name="row[mao_ym]" type="radio" value="{$key}" {in name="key" value="$row.mao_ym"}checked{/in} /> {$vo}</label> 
+            {/foreach}
+            </div>
+
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Create_time')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-create_time" data-rule="required" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm:ss" data-use-current="true" name="row[create_time]" type="text" value="{:$row.create_time?datetime($row.create_time):''}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Update_time')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-update_time" data-rule="required" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm:ss" data-use-current="true" name="row[update_time]" type="text" value="{:$row.update_time?datetime($row.update_time):''}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Uid')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-uid" data-rule="required" class="form-control" name="row[uid]" type="text" value="{$row.uid|htmlentities}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Sn')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-sn" data-rule="required" class="form-control" name="row[sn]" type="text" value="{$row.sn|htmlentities}">
+        </div>
+    </div>
+    <div class="form-group layer-footer">
+        <label class="control-label col-xs-12 col-sm-2"></label>
+        <div class="col-xs-12 col-sm-8">
+            <button type="submit" class="btn btn-success btn-embossed disabled">{:__('OK')}</button>
+            <button type="reset" class="btn btn-default btn-embossed">{:__('Reset')}</button>
+        </div>
+    </div>
+</form>

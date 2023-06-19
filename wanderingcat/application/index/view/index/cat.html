@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport"
+              content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+        <title></title>
+        <script src="/mui/js/jquery.js"></script>
+        <script src="/mui/js/html2canvas.js"></script>
+        <link href="/mui/css/mui.min.css" rel="stylesheet" />
+        <script src="/mui/js/mui.min.js"></script>
+        <script type="text/javascript" charset="utf-8">
+            mui.init();
+        </script>
+        <style>
+            body {
+                margin: 0;
+                color: rgba(0, 0, 0, .85);
+                font-size: 14px;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+                font-variant: tabular-nums;
+                line-height: 1.5715;
+                background-color: #fff;
+                font-feature-settings: 'tnum';
+            }
+
+            body,
+            html {
+                font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+                min-height: 100%;
+            }
+
+            .mui-bar-nav {
+                height: 64px;
+            }
+
+            .mui-bar-nav~.mui-content {
+                padding-top: 70px;
+            }
+
+            .card1 {
+                margin: 10px;
+                margin-bottom: 30px;
+                position: relative;
+            }
+
+            .card1::before {
+                content: " ";
+                height: 48px;
+                position: absolute;
+                background: #d2cef1;
+                width: calc(100% - 32px);
+                left: 16px;
+                bottom: -16px;
+                border-radius: 24px;
+                z-index: 2;
+            }
+
+            .card1::after {
+                content: " ";
+                height: 48px;
+                position: absolute;
+                background: #a8a0e4;
+                width: calc(100% - 16px);
+                left: 8px;
+                bottom: -8px;
+                border-radius: 24px;
+                z-index: 2;
+            }
+
+            .card1 .content {
+                position: relative;
+                margin-bottom: 16px;
+                background-color: #6c5dd3;
+                border-radius: 24px;
+                padding: 12px;
+                min-height: 48px;
+                z-index: 3;
+            }
+
+            .card1 .wrap {
+                padding: 12px 6px;
+            }
+
+            .card1 .name {
+                margin-top: 0;
+                margin-bottom: .5em;
+                color: #ffffff;
+                font-size: 24px;
+                font-weight: 500;
+                line-height: 1.5715;
+            }
+
+            .card1 .source,
+            .card1 .remark {
+                color: rgba(255, 255, 255, .7);
+                padding: 0;
+                margin: 0;
+                font-size: 14px;
+            }
+
+            .card1 .avatar {
+                width: 126px;
+                height: 126px;
+                border: 3px solid #ffffff;
+            }
+
+            .card1 .bq {
+                color: rgba(255, 255, 255, .7);
+                border: 1px solid rgba(255, 255, 255, .7);
+                border-radius: 6px;
+                font-size: 12px;
+                padding: 6px;
+                display: inline-flex;
+                justify-content: center;
+                align-items: center;
+                margin-top: 6px;
+                margin-right: 4px;
+            }
+            .fenxiang_one>img{
+                width: 100%;
+            }
+            .mui-off-canvas-left, .mui-off-canvas-right{
+                background: white;
+            }
+            .mui-off-canvas-wrap{
+                z-index: 999;
+                height: 0;
+            }
+        </style>
+    </head>
+    <body>
+
+        <header class="mui-bar mui-bar-nav">
+            <div style="display:flex;justify-content: space-between;align-items: center;height:  100%;padding: 0 5px;">
+                <div>和猫住の</div>
+                <div><img src="{$site.nav_logo}" style="max-height:50px;"/></div>
+                <div id="offCanvasShow" class="mui-icon mui-action-menu mui-icon-bars mui-pull-right"></div>
+            </div>
+        </header>
+        <div class="mui-content">
+            <div class="mui-scroll-wrapper" style="top:69px;">
+                <div class="mui-scroll">
+                    <div class="card1">
+                        <div class="content">
+                            <div class="wrap">
+                                <div class="" style="display: flex;margin: 0 -3px;">
+                                    <div style="padding: 0 3px;" class="mui-col-xs-7">
+                                        <h2 class="name">{$info['mao_name']}</h2>
+                                        <p class="source">{$info.mao_source}</p>
+                                        <p class="remark">{$info.mao_remark}</p>
+                                    </div>
+                                    <div style="padding: 0 3px; text-align: right;display: flex;justify-content: flex-end;flex-direction: column;align-items: center;" class="mui-col-xs-5">
+                                        <div style="width: 120px; text-align: center; display: block;">
+                                            <img class="avatar" style="display: block;" src="{$info.mao_pic}" />
+                                        </div>
+                                        <div style="margin-top:20px;">
+                                            <button class="mui-btn" type="button" onclick="location.href = '{:url("edit",['sn'=>$info['sn']])}'" >编辑</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="padding: 6px 0;display: flex;">
+                                <div class="bq"><?php $arr_as=explode("/",$info['city']);echo $arr_as[1]."/".$arr_as[2];?></div>
+                                <div class="bq">{:__($info->getMaoSexList()[$info['mao_sex']])}</div>
+                                <div class="bq">{$info.mao_age}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card2" style="margin:12px;padding:17px 22px;background: #ffffff;border-radius: 24px;">
+                        <div>
+                            <div style="    color: #6c5dd3;text-shadow: 0 0 .25px currentColor;">
+                                <div style="display: inline-block;border-bottom:2px solid #6c5dd3;padding: 10px 0;margin-bottom: 10px;">分享卡片</div>
+                            </div>
+                            <div>
+                                <div  style="padding:8px 15px;background: #f6ffed;border: 1px solid #b7eb8f;margin-bottom: 12px;">
+                                    <span style="background: #52c41a;color: white;border-radius: 50%;font-size: 15px;" class="mui-icon mui-icon-checkmarkempty"></span>
+                                    分别长按三张图片保存
+                                </div>
+                                <div class="fenxiang_one" >
+                                    <img src=""/>
+                                </div>
+                                <div style="display:flex;widht:100%;justify-content: space-between">
+                                    <div class="fenxiang_two" style="width:48%;">
+                                        <img src="" style="width:100%;"/>
+                                    </div>
+                                    <div class="fenxiang_three" style="width:48%;">
+                                        <img src="" style="width:100%;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="height:0;overflow: hidden;">
+            <div style="display:flex;padding: 10px;width: 500px;align-items: center;background:url({$site.share_bg1})" class="fenxiang1">
+                <div style="font-size:16px;width: 65%;font-weight: 400;">
+                    <div>
+                        <div><span style="font-size:28px;letter-spacing: 4px;">所在区域 : </span>
+                            <span style="font-size:28px;color: #c1a468">{$arr_as[1]}</span></div>
+                        <div style="display: flex">
+                            <div style="width:50%;">
+                                <span>姓 名 : </span><span>{$info.mao_name}</span>
+                            </div>
+                            <div style="width:50%;">
+                                <span>年 纪 : </span><span>{$info.mao_age}</span>
+                            </div>
+                        </div>
+                        <div style="display: flex">
+                            <div style="width:50%;">
+                                <span>性 别 : </span><span>{$info->getMaoSexList()[$info['mao_sex']]}</span>
+                            </div>
+                            <div style="width:50%;">
+                                <span>绝 育 : </span><span>{$info->getMaoJyList()[$info['mao_jy']]}</span>
+                            </div>
+                        </div>
+                        <div style="display: flex">
+                            <div style="width:50%;">
+                                <span>疫 苗 : </span><span>{$info->getMaoYmList()[$info['mao_ym']]}</span>
+                            </div>
+                            <div style="width:50%;">
+                                <span>来 源 : </span><span>{$info.mao_source}</span>
+                            </div>
+                        </div>
+                        <div style="display: flex">
+                            <div>
+                                <span>备 注 : </span><span>{$info.mao_remark}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="display:flex;margin-top: 10px;align-items: center">
+                        <div style="width:30%;">
+                            <img src="{$info.wx_pic}" style="width:100%;display: block;"/>
+                        </div>
+                        <div style="width:70%">
+                            <div style="font-size:14px">长按识别二维码添加微信带他回家</div>
+                            <div style="color: #c1a468">No:{$info.id}</div>
+                            <div><img src="{$site.wechat_logo2}" style="max-width:80%"/></div>
+                        </div>
+                    </div>
+                </div>
+                <div style="width: 35%;display: flex;flex-direction: column;align-items: center;">
+                    <div>
+                        <img src="{$info.mao_pic}" style="width: 100%;border: 4px solid #c8924c;"/>
+                    </div>
+                    <div style="font-size: 9px;">(注: 仅供公众号 猫和住 使用)</div>
+                    <div>严谨转载泄露隐私</div>
+                </div>
+            </div>
+        </div>
+        <div style="height:0;overflow: hidden;">
+            <div style="width: 428px;position: relative;" class="fenxiang2">
+                <img src="{$site.share_bg2}" style="display:block;width: 100%;position: relative;z-index: 111;"/>
+                <div style="position:absolute;top:25%;left: 0;width: 100%;height: 100%;display: flex;z-index: 999;flex-direction: column;align-items: center;">
+                    <div style="display:flex;justify-content: center;width: 60%;height: 33.5%">
+                        <img src="{$info.mao_pic}" style="width:100%;position: relative;display: block;left:-1%"/>
+                    </div>
+                </div>
+                <div style="position:absolute;top:60.2%;left: 0;width: 100%;height: 100%;display: flex;z-index: 999;flex-direction: column;align-items: center;">
+                    <div>
+                            {$arr_as[0]}
+                    </div>
+                    <div style="color:#c1a468;margin-top: 10px">
+                        <span>No:</span>
+                        <span>{$info.id}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="height:0;overflow: hidden;">
+            <div style="width: 428px;position: relative;" class="fenxiang3">
+                <img src="{$site.share_bg2}" style="display:block;width: 100%;position: relative;z-index: 111;"/>
+                <div style="position:absolute;top:25%;left: 0;width: 100%;height: 100%;display: flex;z-index: 999;flex-direction: column;align-items: center;">
+                     <div style="display:flex;justify-content: center;width: 60%;height: 33.5%">
+                        <img src="{$info.mao_pic}" style="width:100%;position: relative;display: block;left:-1%"/>
+                    </div>
+                </div>
+                <div style="position:absolute;top:60.2%;left: 0;width: 100%;height: 100%;display: flex;z-index: 999;flex-direction: column;align-items: center;">
+                    <div>
+                            {$arr_as[0]}
+                    </div>
+                    <div style="color:#c1a468;margin-top: 10px">
+                        <span>No:</span>
+                        <span>{$info.id}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div  id="offCanvasSide" class="mui-off-canvas-wrap mui-draggable mui-slide-in">
+            <!-- 菜单容器 -->
+            <aside class="mui-off-canvas-right">
+                <div class="mui-scroll-wrapper">
+                    <div class="mui-scroll">
+                        <div style="    position: relative;
+                             padding: 16px 24px;
+                             color: rgba(0,0,0,.85);
+                             background: #fff;
+                             border-bottom: 1px solid #f0f0f0;
+                             border-radius: 2px 2px 0 0;display: flex;justify-content: space-between">
+
+                            <div>menu</div><span class="mui-icon mui-icon-closeempty" id="closebtn"></span>
+                        </div>
+                        <div  style="flex-grow: 1;
+                              padding: 24px;
+                              overflow: auto;
+                              font-size: 14px;
+                              line-height: 1.5715;
+                              word-wrap: break-word;display: flex;flex-direction: column;">
+                            <button type="button" class="mui-btn" onclick="location.href = '{:url("my")}'" style="display: flex;
+                                    align-items: center;
+                                    justify-content: space-between;
+                                    padding: 12px 0;
+                                    color: rgba(0,0,0,.85);border: 0">我发布的猫咪</button>
+                            <button type="button" class="mui-btn" onclick="location.href = '{:url("post")}'" style="display: flex;
+                                    align-items: center;
+                                    justify-content: space-between;
+                                    padding: 12px 0;
+                                    color: rgba(0,0,0,.85);border: 0">发布领养</button>
+
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- 主页面容器 -->
+            <div class="mui-inner-wrap">
+
+                <div class="mui-off-canvas-backdrop"></div>
+            </div>
+        </div>
+        <script>
+            window.onload = function(){
+            mui('.mui-scroll-wrapper').scroll({
+            deceleration: 0.0005 //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
+            });
+            document.getElementById('offCanvasShow').addEventListener('tap', function() {
+            mui('.mui-off-canvas-wrap').offCanvas('show');
+            });
+            document.getElementById('closebtn').addEventListener('tap', function() {
+            mui('.mui-off-canvas-wrap').offCanvas('close');
+            });
+            }
+            $(function () {
+            setTimeout(function () {
+            html2canvas($(".fenxiang1").get(0)).then(function (canvas) {
+            var dataImg = canvas.toDataURL().replace(/(\r\n)|(\n)|(\r)/g, '');
+            $(".fenxiang_one>img").attr("src", dataImg)
+                    $(".fenxiang1").remove()
+            });
+            html2canvas($(".fenxiang2").get(0)).then(function (canvas) {
+            var dataImg = canvas.toDataURL().replace(/(\r\n)|(\n)|(\r)/g, '');
+            $(".fenxiang_two>img").attr("src", dataImg)
+                    $(".fenxiang2").remove()
+            });
+            html2canvas($(".fenxiang3").get(0)).then(function (canvas) {
+            var dataImg = canvas.toDataURL().replace(/(\r\n)|(\n)|(\r)/g, '');
+            $(".fenxiang_three>img").attr("src", dataImg)
+                    $(".fenxiang3").remove()
+            });
+            }, 300);
+            });
+        </script>
+    </body>
+</html>

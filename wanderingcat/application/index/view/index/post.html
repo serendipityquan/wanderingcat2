@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport"
+              content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+        <title></title>
+        <link href="/mui/css/mui.min.css" rel="stylesheet" />
+        <link href="/mui/css/mui.picker.css" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="/mui/css/cropper.css" />
+        <link href="/mui/css/mui.poppicker.css" rel="stylesheet" />
+
+        <link href="/mui/css/webuploader.css" rel="stylesheet" />
+        <script src="/mui/js/jquery.js"></script>
+        <script>
+            var $$ = jQuery.noConflict();
+        </script>
+        <script src="/mui/js/mui.min.js"></script>
+        <script src="/mui/js/mui.picker.js"></script>
+        <script src="/mui/js/mui.poppicker.js"></script>
+        <script src="/mui/js/cropper.js"></script>
+        <script src="/mui/js/jquery-cropper.js"></script>
+        <script src="/mui/js/webuploader.js"></script>
+        <script src="/mui/js/city.data.js"></script>
+
+        <script type="text/javascript" charset="utf-8">
+            mui.init();
+        </script>
+        <style>
+            body {
+                margin: 0;
+                color: rgba(0, 0, 0, .85);
+                font-size: 14px;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+                font-variant: tabular-nums;
+                line-height: 1.5715;
+                font-feature-settings: 'tnum';
+            }
+
+            body,
+            html {
+                font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+                min-height: 100%;
+            }
+
+            .mui-bar-nav {
+                height: 64px;
+            }
+
+            .mui-bar-nav~.mui-content {
+                padding-top: 70px;
+                padding-bottom: 6px;
+            }
+
+            .card1 {
+                margin: 12px;
+                padding: 32px;
+                border-radius: 24px;
+                background-color: #FFFFFF;
+            }
+
+            .card1 .title {
+                margin-top: 0;
+                margin-bottom: .5em;
+                color: rgba(0, 0, 0, .85);
+                font-weight: 500;
+                padding-bottom: 6px;
+                font-size: 1.5em;
+                line-height: 1.5715;
+            }
+
+            .xxxx {
+                position: relative;
+            }
+
+            .xxxx .heng,
+            .xxxx .shu {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .xxxx .heng>div,
+            .xxxx .shu>div {
+                width: 20%;
+                height: 2px;
+                background-color: #000000;
+            }
+
+            .xxxx .shu>div {
+                height: 20%;
+                width: 2px;
+            }
+
+            .xxxx>.img {
+                width: 100%;
+                height: 100%;
+                position: relative;
+                z-index: 9999;
+            }
+
+            .xxxx>.img img {
+                width: 100%;
+            }
+
+            .cj {
+                max-width: 100%;
+                max-height: 300px;
+            }
+
+            .cropper-container img {
+                max-width: 100%;
+                max-height: 300px;
+            }
+            input:focus{
+                border-color: #9687e0;
+                border-right-width: 1px!important;
+                outline: 0;
+                box-shadow: 0 0 0 2px rgb(108 93 211 / 20%);
+            }
+            input:hover{
+                border-color: #9687e0;
+                border-right-width: 1px!important;
+            }
+            .mui-off-canvas-left, .mui-off-canvas-right{
+                background: white;
+            }
+        </style>
+    </head>
+    <body onresize="document.activeElement.scrollIntoView(true);">
+
+        <div  id="offCanvasSide" class="mui-off-canvas-wrap mui-draggable mui-slide-in">
+            <!-- 菜单容器 -->
+            <aside class="mui-off-canvas-right">
+                <div class="mui-scroll-wrapper">
+                    <div class="mui-scroll">
+                        <div style="    position: relative;
+                             padding: 16px 24px;
+                             color: rgba(0,0,0,.85);
+                             background: #fff;
+                             border-bottom: 1px solid #f0f0f0;
+                             border-radius: 2px 2px 0 0;display: flex;justify-content: space-between">
+
+                            <div>menu</div><span class="mui-icon mui-icon-closeempty" id="closebtn"></span>
+                        </div>
+                        <div  style="flex-grow: 1;
+                              padding: 24px;
+                              overflow: auto;
+                              font-size: 14px;
+                              line-height: 1.5715;
+                              word-wrap: break-word;display: flex;flex-direction: column;">
+                            <button type="button" class="mui-btn" onclick="location.href = '{:url("my")}'" style="display: flex;
+                                    align-items: center;
+                                    justify-content: space-between;
+                                    padding: 12px 0;
+                                    color: rgba(0,0,0,.85);border: 0">我发布的猫咪</button>
+                            <button type="button" class="mui-btn" onclick="location.href = '{:url("post")}'" style="display: flex;
+                                    align-items: center;
+                                    justify-content: space-between;
+                                    padding: 12px 0;
+                                    color: rgba(0,0,0,.85);border: 0">发布领养</button>
+
+                        </div>
+                    </div>
+                </div>
+            </aside>
+            <!-- 主页面容器 -->
+            <div class="mui-inner-wrap">
+                <header class="mui-bar mui-bar-nav">
+                    <div style="display:flex;justify-content: space-between;align-items: center;height:  100%;padding: 0 5px;">
+                        <div>和猫住の</div>
+                        <div><img src="{$site.nav_logo}" style="max-height:50px;"/></div>
+                        <div id="offCanvasShow"  class="mui-icon mui-action-menu mui-icon-bars mui-pull-right"></div>
+                    </div>
+                </header>
+                <div class="mui-content">
+                    <div class="mui-scroll-wrapper" style="top:64px;">
+                        <div class="mui-scroll">
+                            <div class="card1">
+                                <h2 class="title">发布领养信息</h2>
+                                <form>
+                                    <div style="display: flex;margin-bottom: 24px;">
+                                        <div class="mui-col-xs-6">
+                                            <div style="padding-bottom: 8px;font-size: 14px;display: flex;align-items: center;">
+                                                <div style="font-family: SimSun,sans-serif;color: #ff4d4f;margin-right: 4px;">*</div>
+                                                <div>猫咪照片</div>
+                                            </div>
+                                            <div>
+                                                <div class="xxxx catx" style="width: 100px;height: 100px;border: 1px solid #e4e4e4;">
+                                                    <span class="mui-icon mui-icon mui-icon-close"
+                                                          style="display: none;z-index: 99999;color: red;position: absolute;right: -10px;top: -10px;"></span>
+                                                    <div class="img" style="display: none;">
+                                                        <img class="view_cat_pic" src="" style="" />
+                                                    </div>
+                                                    <div class="heng">
+                                                        <div></div>
+                                                    </div>
+                                                    <div class="shu">
+                                                        <div></div>
+                                                    </div>
+                                                </div>
+                                                <input type="file" class="mao_pic" style="display: none;" />
+                                            </div>
+                                        </div>
+                                        <div class="mui-col-xs-6">
+                                            <div style="padding-bottom: 8px;font-size: 14px;display: flex;align-items: center;">
+                                                <div style="font-family: SimSun,sans-serif;color: #ff4d4f;margin-right: 4px;">*</div>
+                                                <div>微信联系二维码</div>
+                                            </div>
+                                            <div>
+                                                <div class="xxxx wxx" style="width: 100px;height: 100px;border: 1px solid #e4e4e4;">
+                                                    <span class="mui-icon mui-icon mui-icon-close"
+                                                          style="display: none;z-index: 99999;color: red;position: absolute;right: -10px;top: -10px;"></span>
+                                                    <div class="img" style="display: none;">
+                                                        <img class="view_wx_pic" src="" style="" />
+                                                    </div>
+                                                    <div class="heng">
+                                                        <div></div>
+                                                    </div>
+                                                    <div class="shu">
+                                                        <div></div>
+                                                    </div>
+                                                </div>
+                                                <input type="file" class="wx_pic" style="display: none;" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="margin-bottom: 24px;">
+                                        <div style="padding-bottom: 8px;font-size: 14px;display: flex;align-items: center;">
+                                            <div style="font-family: SimSun,sans-serif;color: #ff4d4f;margin-right: 4px;">*</div>
+                                            <div>所在地区</div>
+                                        </div>
+                                        <div>
+                                            <input name="city_text" onclick="showpicker()" type="text" readonly="readonly" value="北京/北京/东城区" />
+                                            <input name="city" type="hidden" value="北京/北京/东城区"/>
+                                            <input name="province_id" type="hidden" value="110000"/>
+                                            <input name="city_id" type="hidden" value="110000"/>
+                                            <input name="district_id" type="hidden" value="110000"/>
+                                        </div>
+                                    </div>
+                                    <div style="margin-bottom: 24px;">
+                                        <div style="padding-bottom: 8px;font-size: 14px;display: flex;align-items: center;">
+                                            <div style="font-family: SimSun,sans-serif;color: #ff4d4f;margin-right: 4px;">*</div>
+                                            <div>喵咪名称</div>
+                                        </div>
+                                        <div>
+                                            <input type="text" name="mao_name" value="" />
+                                        </div>
+                                    </div>
+                                    <div style="margin-bottom: 24px;">
+                                        <div style="padding-bottom: 8px;font-size: 14px;display: flex;align-items: center;">
+                                            <div style="font-family: SimSun,sans-serif;color: #ff4d4f;margin-right: 4px;">*</div>
+                                            <div>猫咪年龄</div>
+                                        </div>
+                                        <div>
+                                            <input type="text" name="mao_age" value="" placeholder="eg: 1 岁， 2个月" />
+                                        </div>
+                                    </div>
+                                    <div style="margin-bottom: 24px;">
+                                        <div style="padding-bottom: 8px;font-size: 14px;display: flex;align-items: center;">
+                                            <div style="font-family: SimSun,sans-serif;color: #ff4d4f;margin-right: 4px;">*</div>
+                                            <div>性别</div>
+                                        </div>
+                                        <div style="display: flex;" class="radio_btn">
+                                            <button data-v="1" type="button" class="mui-btn"
+                                                    style="border-top-right-radius:0;border-bottom-right-radius:0;">妹妹</button>
+                                            <button data-v="2" type="button" class="mui-btn"
+                                                    style="border-left: 0;border-right: 0;border-radius: 0;">弟弟</button>
+                                            <button data-v="3" type="button" class="mui-btn mui-btn-royal"
+                                                    style="border-top-left-radius:0;border-bottom-left-radius:0;">未知</button>
+                                            <input type="hidden" name="mao_sex" value="3"/>
+                                        </div>
+                                    </div>
+                                    <div style="margin-bottom: 24px;display: flex;">
+                                        <div class="mui-col-xs-6">
+                                            <div style="padding-bottom: 8px;font-size: 14px;display: flex;align-items: center;">
+                                                <div style="font-family: SimSun,sans-serif;color: #ff4d4f;margin-right: 4px;">*</div>
+                                                <div>已绝育</div>
+                                            </div>
+                                            <div style="display: flex;" class="radio_btn">
+                                                <button data-v="0" type="button" class="mui-btn"
+                                                        style="border-top-right-radius:0;border-bottom-right-radius:0;">是</button>
+                                                <button data-v="1" type="button" class="mui-btn mui-btn-royal"
+                                                        style="border-top-left-radius:0;border-bottom-left-radius:0;border-left: 0;">否</button>
+
+                                                <input type="hidden" name="mao_jy" value="0"/>
+                                            </div>
+                                        </div>
+                                        <div class="mui-col-xs-6">
+                                            <div style="padding-bottom: 8px;font-size: 14px;display: flex;align-items: center;">
+                                                <div style="font-family: SimSun,sans-serif;color: #ff4d4f;margin-right: 4px;">*</div>
+                                                <div>已打疫苗</div>
+                                            </div>
+                                            <div style="display: flex;" class="radio_btn">
+                                                <button type="button" class="mui-btn"
+                                                        style="border-top-right-radius:0;border-bottom-right-radius:0;">是</button>
+                                                <button type="button" class="mui-btn mui-btn-royal"
+                                                        style="border-top-left-radius:0;border-bottom-left-radius:0;border-left: 0;">否</button>
+
+                                                <input type="hidden" name="mao_ym" value="0"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="margin-bottom: 24px;">
+                                        <div style="padding-bottom: 8px;font-size: 14px;display: flex;align-items: center;">
+                                            <div style="font-family: SimSun,sans-serif;color: #ff4d4f;margin-right: 4px;">*</div>
+                                            <div>来源</div>
+                                        </div>
+                                        <div>
+                                            <input name="mao_source" type="text" placeholder="eg: 小区流浪猫" value="" />
+                                        </div>
+                                    </div>
+                                    <div style="margin-bottom: 24px;">
+                                        <div style="padding-bottom: 8px;font-size: 14px;display: flex;align-items: center;">
+                                            <div style="font-family: SimSun,sans-serif;color: #ff4d4f;margin-right: 4px;">*</div>
+                                            <div>备注</div>
+                                        </div>
+                                        <div>
+                                            <textarea placeholder="对领养者说的一句话。选填，20字内，尽量简短。" id="remark" name="mao_remark"
+                                                      class="ant-input ant-input-lg"></textarea>
+                                        </div>
+                                    </div>
+                                    <div>
+
+                                        <div style="background:black;" id="submit" class="mui-btn mui-btn-primary mui-btn-block">发布</div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mui-off-canvas-backdrop"></div>
+                </div>
+            </div>
+            <script>
+                mui('.mui-scroll-wrapper').scroll({
+                deceleration: 0.0005 //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
+                });
+                  document.getElementById('offCanvasShow').addEventListener('tap', function() {
+            mui('.mui-off-canvas-wrap').offCanvas('show');
+            });
+            document.getElementById('closebtn').addEventListener('tap', function() {
+            mui('.mui-off-canvas-wrap').offCanvas('close');
+            });
+                
+                var formData = new FormData();
+                var picker = new mui.PopPicker({
+                layer: 3
+                });
+                function showpicker() {
+                picker.show(function (selectItems) {
+                console.log(selectItems)
+                        $$('[name=city_text]').val(selectItems[0].text + "/" + selectItems[1].text + "/" + selectItems[2].text)
+                        $$('[name=city]').val(selectItems[0].text + "/" + selectItems[1].text + "/" + selectItems[2].text)
+                        $$('[name=province_id]').val(selectItems[0].value)
+                        $$('[name="city_id"]').val(selectItems[1].value)
+                        $$('[name=district_id]').val(selectItems[2].value)
+                })
+
+                }
+                $$(function () {
+                $$('.radio_btn>button').on("click", function () {
+                $$(this).siblings("button").removeClass("mui-btn-royal");
+                $$(this).addClass("mui-btn-royal");
+                $$(this).siblings("input").val($$(this).data("v"));
+                });
+                picker.setData(cityData3);
+                picker.pickers[0].setSelectedValue("110000")
+                        picker.pickers[1].setSelectedValue("110101")
+                        picker.pickers[2].setSelectedValue("110101")
+                        $$("#submit").on("tap", function () {
+                formData.append("city", $$("[name=city]").val())
+                        formData.append("province_id", $$("[name=province_id]").val())
+                        formData.append("city_id", $$("[name=city_id]").val())
+                        formData.append("district_id", $$("[name=district_id]").val())
+                        formData.append("mao_name", $$("[name=mao_name]").val())
+                        formData.append("mao_age", $$("[name=mao_age]").val())
+                        formData.append("mao_sex", $$("[name=mao_sex]").val())
+                        formData.append("mao_jy", $$("[name=mao_jy]").val())
+                        formData.append("mao_ym", $$("[name=mao_ym]").val())
+                        formData.append("mao_source", $$("[name=mao_source]").val())
+                        formData.append("mao_remark", $$("[name=mao_remark]").val())
+
+                        $$.ajax({
+                        type: "POST",
+                                url: '',
+                                data: formData,
+                                contentType: false, //必须
+                                processData: false, //必须
+                                dataType: "json",
+                                success: function (retJson) {
+                                //清空上传文件的值
+                                mui.toast("提交成功")
+                                        setTimeout(function () {
+                                        location.href = retJson.url
+                                        }, 500)
+
+                                },
+                                error: function () {
+
+                                }
+                        });
+                });
+                $$('.xxxx').on('tap', function () {
+                if (!$$(this).hasClass("has_pic")) {
+                $$(this).next("input").trigger("click");
+                }
+
+                });
+                $$(document).on("tap", ".mui-icon-close", function () {
+                $$(this).parent(".xxxx").find(".img").css("display", "none")
+                        $$(this).parent(".xxxx").removeClass("has_pic");
+                $$(this).parent().find(".mui-icon-close").css("display", "none")
+                })
+                        $$(".wx_pic").on("change", function (file) {
+                var file = this.files[0];
+                var fileName = file.name;
+                var reader = new FileReader();
+                reader.readAsDataURL(file);
+                $$(this).val("")
+                        var that = this;
+                //reader回调，重新初始裁剪区
+                reader.onload = function () {
+                // 通过 reader.result 来访问生成的 DataURL
+                var url = reader.result;
+                //选择图片后重新初始裁剪区
+                mui.confirm(`<div><img class="cj"/></div>`, '裁剪图片', ['取消', '确认'], function (e) {
+                var type = $$(".cj").attr('src').split(';')[0].split(':')[1];
+                var canVas = $$(".cj").cropper("getCroppedCanvas", {});
+                $$('.view_wx_pic').attr("src", canVas.toDataURL())
+                        $$('.view_wx_pic').parent().css("display", "block");
+                $$(".wxx").addClass("has_pic");
+                $$(".wxx").find(".mui-icon-close").css("display", "inline-block")
+                        canVas.toBlob(function (blob) {
+                        formData.append("wx_pic", blob, fileName);
+                        }, type);
+                }, 'div')
+
+                        $$(".cj").cropper({
+                cropBoxResizable: false,
+                        cropBoxMovable: false,
+                        autoCropArea: 0.9,
+                        dragMode: "move",
+                        viewMode: 1,
+                        aspectRatio: 1,
+                        minContainerWidth: 200,
+                        minContainerHeight: 300,
+                        crop: function (data) {
+                        // Output the result data for cropping image.
+
+                        }
+                });
+                $$(".cj").cropper('reset', true).cropper('replace', url);
+                };
+                });
+                $$(".mao_pic").on("change", function (file) {
+                var file = this.files[0];
+                var fileName = file.name;
+                var reader = new FileReader();
+                reader.readAsDataURL(file);
+                $$(this).val("")
+                        var that = this;
+                //reader回调，重新初始裁剪区
+                reader.onload = function () {
+                // 通过 reader.result 来访问生成的 DataURL
+                var url = reader.result;
+                //选择图片后重新初始裁剪区
+                mui.confirm(`<div><img class="cj"/></div>`, '裁剪图片', ['取消', '确认'], function (e) {
+                var canVas = $$(".cj").cropper("getCroppedCanvas", {});
+                $$('.view_cat_pic').attr("src", canVas.toDataURL())
+                        $$('.view_cat_pic').parent().css("display", "block");
+                $$(".catx").addClass("has_pic");
+                $$(".catx").find(".mui-icon-close").css("display", "inline-block")
+                        var type = $$(".cj").attr('src').split(';')[0].split(':')[1];
+                var canVas = $$(".cj").cropper("getCroppedCanvas", {});
+                canVas.toBlob(function (blob) {
+                formData.append("mao_pic", blob, fileName);
+                }, type);
+                }, 'div')
+
+                        $$(".cj").cropper({
+                cropBoxResizable: false,
+                        cropBoxMovable: false,
+                        autoCropArea: 0.9,
+                        dragMode: "move",
+                        viewMode: 1,
+                        aspectRatio: 1,
+                        minContainerWidth: 200,
+                        minContainerHeight: 300,
+                        crop: function (data) {
+                        // Output the result data for cropping image.
+
+                        }
+                });
+                $$(".cj").cropper('reset', true).cropper('replace', url);
+                };
+                });
+                });
+            </script>
+    </body>
+</html>
